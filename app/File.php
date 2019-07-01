@@ -12,5 +12,5 @@ class File extends Model
     ];
     protected $guarded = ['id', 'created_at', 'update_at'];
 
-    protected $table = 'cartao_creditos';
+    protected $table = 'files';
 }
