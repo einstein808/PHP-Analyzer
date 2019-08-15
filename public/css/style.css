@@ -44,3 +44,17 @@
     user-select: none; /* Non-prefixed version, currently
                           supported by Chrome and Opera */
 }
+
+.text-red {
+    color: #FF6347
+}
+
+.mt-2 {
+    margin-top: 2% !important
+}
+
+.btn-default {
+    color: #fff !important;
+    background-color: #3490dc !important;
+    border-color: #3490dc !important;
+}
