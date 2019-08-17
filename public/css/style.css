@@ -58,3 +58,18 @@
     background-color: #3490dc !important;
     border-color: #3490dc !important;
 }
+
+.card-header {
+    background-color: rgba(195, 195, 195, 0.3) !important
+}
+
+.pull-right {
+    float: right;
+}
+
+#btn_scroll {
+    position: fixed;
+    top: 90%;
+    right: 10px;
+    z-index: 999;
+}

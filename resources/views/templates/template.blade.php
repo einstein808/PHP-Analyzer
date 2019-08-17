@@ -37,8 +37,11 @@
             j = jQuery.noConflict();
             j(document).ready(function() {
                 if(j(":file").length) {
-                    j(":file").filestyle({placeholder: "Selecione os arquivos"});
+                    j(":file").filestyle({placeholder: "Selecione os arquivos"})
                 }
+                j('#btn_scroll').click(function() {
+                    window.scrollTo({top:0, behavior: 'smooth'})
+                })
             })
         </script>
     </footer>
