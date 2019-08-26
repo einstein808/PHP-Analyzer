@@ -6,7 +6,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>SegWeb</title>
     </head>
@@ -39,6 +39,7 @@
                 if(j(":file").length) {
                     j(":file").filestyle({placeholder: "Selecione os arquivos"})
                 }
+
                 j('#btn_scroll').click(function() {
                     window.scrollTo({top:0, behavior: 'smooth'})
                 })

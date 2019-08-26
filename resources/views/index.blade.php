@@ -14,41 +14,40 @@
                     <div class="card-body">
                         <pre>
                             <code style="color: black !important;">
-                                {{-- {{print_r($file_content)}} --}}
                                 <table class="code-border w100">
                                     <tbody>
+                                        {{$result = NULL}}
+                                        {{-- {{print_r($file_content)}} --}}
                                         @foreach ($file_content as $key => $content)
                                         @php
-                                        {{
-                                            $key_color = 'pure-green';
-                                            $line_color = 'pastel-green';
-                                            // verificar ocorrencia de mais de um termo na mesma linha (manter a cor de maior problema)
+                                            $color = 'green';
                                             foreach ($content as $term_type => $term) {
+                                                echo $term_type;
+                                                echo "<br>";
+                                                
                                                 if($term_type == 'disabled_functions') {
-                                                    $key_color = 'pure-red';
-                                                    $line_color = 'pastel-red';
+                                                    $color = 'red';
+                                                    $result[] = [
+                                                        'line' => 1+$key,
+                                                        'error_type' => $term_type,
+                                                        'error' => "Uso de $term"
+                                                    ];
                                                 } 
                                                 else if($term_type == 'program_execution_functions') {
-                                                    if($key_color != 'pure-red') {
-                                                        $key_color = 'pure-yellow';
-                                                        $line_color = 'pastel-yellow';
+                                                    if($color != 'red') {
+                                                        $color = 'yellow';
+                                                        $result[] = [
+                                                            'line' => 1+$key,
+                                                            'error_type' => $term_type,
+                                                            'error' => "Uso de ".$term
+                                                        ];
                                                     }
-                                                }
+                                                }   
                                             }
-
-                                            // if(!empty($content['warning'])) {
-                                            //     $key_color = 'pure-yellow';
-                                            //     $line_color = 'pastel-yellow';
-                                            // }
-                                            // if(!empty($content['danger'])) {
-                                            //     $key_color = 'pure-red';
-                                            //     $line_color = 'pastel-red';
-                                            // }
-                                        }}
                                         @endphp
-                                        <tr class="unselectable">
-                                            <td class="{{$key_color}} key-style">{{(1+$key). " - "}}</td>
-                                            <td class="{{$line_color}}">{{$content['text']}}</td>
+                                        <tr class="unselectable" id="line-{{1+key}}">
+                                            <td class="pure-{{$color}} key-style">{{(1+$key). " - "}}</td>
+                                            <td class="pastel-{{$color}}">{{$content['text']}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -56,8 +55,29 @@
                             </code>
                         </pre>
                     </div>
-                    <div class="card-footer">
-                        <strong>RESULTADOS</strong>
+                </div>
+            </div>
+            
+            <div class="col-md-12 mt-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Resultados</h1>
+                    </div>
+                    <div class="card-body">
+                        @if(!empty($result)) 
+                            <div class="list-group-flush">
+                                @foreach ($result as $value)
+                                    <div class="list-group-item list-group-item-action line_result" id="line_result-{{$value['line']}}">
+                                        <div class="w-100">
+                                            <h5 class="mb-1">Linha: {{$value['line']}}</h5>
+                                            <br>
+                                            <p><span class="mb-1">Tipo do erro: </span><a href="">{{$value['error_type']}}</a></p>
+                                            <p class="mb-1">Erro: <span>{{$value['error']}}</span></p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

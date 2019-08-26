@@ -13,4 +13,4 @@
 
 Route::get('/', 'FileController@index');
 
-Route::post('/', 'FileController@store');
+Route::post('/', 'FileController@submitFile');

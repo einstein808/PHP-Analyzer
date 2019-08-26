@@ -33,6 +33,7 @@
 .key-style {
     border-right: 1px solid lightgrey !important;
     text-align: right;
+    width: 5%;
 }
 
 .unselectable {
