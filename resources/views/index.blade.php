@@ -17,14 +17,10 @@
                                 <table class="code-border w100">
                                     <tbody>
                                         {{$result = NULL}}
-                                        {{-- {{print_r($file_content)}} --}}
                                         @foreach ($file_content as $key => $content)
                                         @php
                                             $color = 'green';
                                             foreach ($content as $term_type => $term) {
-                                                echo $term_type;
-                                                echo "<br>";
-                                                
                                                 if($term_type == 'disabled_functions') {
                                                     $color = 'red';
                                                     $result[] = [
@@ -45,7 +41,7 @@
                                                 }   
                                             }
                                         @endphp
-                                        <tr class="unselectable" id="line-{{1+key}}">
+                                        <tr class="unselectable" id="line-{{1+$key}}">
                                             <td class="pure-{{$color}} key-style">{{(1+$key). " - "}}</td>
                                             <td class="pastel-{{$color}}">{{$content['text']}}</td>
                                         </tr>
@@ -113,7 +109,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-upload" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
