@@ -268,8 +268,24 @@
                 })
             })
 
-            function ajaxLoad(params) {
-                
+            function ajaxLoadResult(file) {
+                j.ajax({
+                    url: "{{ url('/ajax_result') }}",
+                    type: 'POST',
+                    cache: false,
+                    data: { 
+                        file: file
+                    },
+                    // datatype: 'html',
+                    success: function(success) {
+                        console.log(success)
+                    },
+                    error: function(a, b, c) {
+                        console.log(a)
+                        console.log(b)
+                        console.log(c)
+                    }
+                })
             }
         </script>
         @if (!empty($msg))

@@ -8,18 +8,18 @@ class Tools extends Controller
         return strpos($haystack, $needle) !== false;
     }
 
-    // function listFolderFiles($dir) {
-    //     $ffs = scandir($dir);
+    public static function listFolderFiles($dir) {
+        $ffs = scandir($dir);
+        unset($ffs[array_search('.', $ffs, true)]);
+        unset($ffs[array_search('..', $ffs, true)]);
 
-    //     unset($ffs[array_search('.', $ffs, true)]);
-    //     unset($ffs[array_search('..', $ffs, true)]);
-
-    //     echo '<ul>';
-    //     foreach($ffs as $ff){
-    //         echo '<li><a href='.$dir.'/'.$ff.'>'.$ff.'</a>';
-    //         if(is_dir($dir.'/'.$ff)) listFolderFiles($dir.'/'.$ff);
-    //         echo '</li>';
-    //     }
-    //     echo '</ul>';
-    // }
+        echo '<ul>';
+        foreach($ffs as $ff){
+            // echo '<li><a href='.$dir.'/'.$ff.'>'.$ff.'</a>';
+            echo "<li><a href='#' data-file='$dir/$ff'>".$ff."</a>";
+            if(is_dir($dir.'/'.$ff)) Tools::listFolderFiles($dir.'/'.$ff);
+            echo '</li>';
+        }
+        echo '</ul>';
+    }
 }
