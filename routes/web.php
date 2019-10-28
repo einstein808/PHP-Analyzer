@@ -20,3 +20,6 @@ Route::get('/github', 'FileController@indexGithub');
 Route::post('/github', 'FileController@downloadGithub');
 
 Route::post('/ajax_result', 'FileController@load_results');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

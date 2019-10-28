@@ -16,9 +16,7 @@
     @endsection --}}
     <div class="row">
         <div class="col-md-3">
-            @php
-            Tools::listFolderFiles($file_location);
-            @endphp 
+            @php Tools::listFolderFiles($file_location); @endphp 
         </div>
         <div class="col-md-9">
             <div id="result"></div>

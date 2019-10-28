@@ -62,7 +62,6 @@ class FileController extends Controller
     }
 
     public function downloadGithub(Request $request) {
-        // Validar se o endereço vem com '/' no final. se vier, remova
         try {
             substr($request->github_link, -1) == '/' ? $github_link = substr_replace($request->github_link ,"", -1)  : $github_link = $request->github_link;
             $url = $github_link.'/archive/'.$request->branch.'.zip';
@@ -82,7 +81,6 @@ class FileController extends Controller
         } catch (Exception $e) {
             return view('github', compact([$e]));
         }
-        
     }   
 
 
