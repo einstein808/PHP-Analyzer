@@ -9,7 +9,7 @@
                         <h1>Arquivos analisados</h1>
                     </div>
                     <div class="card-title text-center">
-                        <h4>{{$originalname}}</h4>
+                        <h4>{{$file->nome_original}}</h4>
                     </div>
                     <div class="card-body">
                         <pre>

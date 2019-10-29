@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use SegWeb\File;
 use SegWeb\Http\Controllers\Tools;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class FileController extends Controller
 {
@@ -20,7 +21,7 @@ class FileController extends Controller
         $json_file = Storage::disk('local')->get('terms/terms.json');
         return json_decode($json_file, true);
     }
-    
+
     public function submitFile(Request $request) {
         $file = new File();
         $path = $request->file('file')->store('uploads', 'local');
@@ -28,18 +29,27 @@ class FileController extends Controller
         $file->arquivo = $path;
         $file->nome_original = $originalname;
         $file->save();
+        $file_content = $this->analiseFile($file->id);
+        return view('index', compact(['file_content', 'file']));
+    }
 
-        $tools = new Tools();
+    function getFileById($id) {
+        $file = DB::table('files')->find($id);
+        return $file;
+    }
+
+    public function analiseFile($id_file) {
         try {
+            $file = $this->getFileById($id_file);
+            $tools = new Tools();
             $terms = $this->getJsonTerms();
             $file_location = Storage::disk('local')->getDriver()->getAdapter()->applyPathPrefix($file->arquivo);
             $fn = fopen("$file_location","r");
             $i = 0;
-            while(!feof($fn))  {
-                
+            while(!feof($fn)) {
                 $file_line = fgets($fn);
                 foreach($terms as $term_type_key => $term_types) {
-                    foreach ($term_types as $term_key => $term) {
+                    foreach ($term_types as $term) {
                         if($tools->contains($term, $file_line)) {
                             $file_content[$i][$term_type_key] = $term;
                         }
@@ -52,9 +62,42 @@ class FileController extends Controller
         } catch (Illuminate\Contracts\Filesystem\FileNotFoundException $exception) {
             $file_content = "Arquivo não encontrado";
         }
-        
-        return view('index', compact(['file_content', 'originalname']));
+        return $file_content;
     }
+    
+    // public function submitFile(Request $request) {
+    //     $file = new File();
+    //     $path = $request->file('file')->store('uploads', 'local');
+    //     $originalname = $request->file('file')->getClientOriginalName();
+    //     $file->arquivo = $path;
+    //     $file->nome_original = $originalname;
+    //     $file->save();
+
+    //     try {
+    //         $tools = new Tools();
+    //         $terms = $this->getJsonTerms();
+    //         $file_location = Storage::disk('local')->getDriver()->getAdapter()->applyPathPrefix($file->arquivo);
+    //         $fn = fopen("$file_location","r");
+    //         $i = 0;
+    //         while(!feof($fn)) {
+    //             $file_line = fgets($fn);
+    //             foreach($terms as $term_type_key => $term_types) {
+    //                 foreach ($term_types as $term_key => $term) {
+    //                     if($tools->contains($term, $file_line)) {
+    //                         $file_content[$i][$term_type_key] = $term;
+    //                     }
+    //                 }
+    //             }
+    //             $file_content[$i]['text'] = $file_line;
+    //             $i++;
+    //         }
+    //         fclose($fn);
+    //     } catch (Illuminate\Contracts\Filesystem\FileNotFoundException $exception) {
+    //         $file_content = "Arquivo não encontrado";
+    //     }
+        
+    //     return view('index', compact(['file_content', 'originalname']));
+    // }
 
     public function indexGithub() {
         $msg = NULL;
