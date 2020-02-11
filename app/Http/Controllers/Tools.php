@@ -4,7 +4,7 @@ namespace SegWeb\Http\Controllers;
 
 class Tools extends Controller
 {
-    public function contains($needle, $haystack) {
+    public static function contains($needle, $haystack) {
         return strpos($haystack, $needle) !== false;
     }
 
@@ -21,5 +21,9 @@ class Tools extends Controller
             echo '</li>';
         }
         echo '</ul>';
+    }
+
+    public static function data($data){
+        return date("d/m/Y H:i:s", strtotime($data));
     }
 }

@@ -8,8 +8,8 @@ class File extends Model
 {
     protected $filltable = [
         'user_id',
-        'arquivo',
-        'nome_original',
+        'file_path',
+        'original_file_name',
         'type'
     ];
     protected $guarded = ['id', 'created_at', 'update_at'];

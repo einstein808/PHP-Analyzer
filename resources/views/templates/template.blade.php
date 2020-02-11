@@ -8,6 +8,8 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script> --}}
         {{-- <style>
             .wrapper {
             position: relative;
@@ -221,6 +223,11 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/github">Enviar repositório do Github <i class="fa fa-github" aria-hidden="true"></i><span class="sr-only"></span></a>
                         </li>
+                        @if (Auth::check())    
+                            <li>
+                                <a class="nav-link" href="/yourfiles">Seus arquivos <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
+                            </li>
+                        @endif
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @guest
@@ -237,12 +244,10 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -290,6 +295,10 @@
                 if(j(":file").length) {
                     j(":file").filestyle({placeholder: "Selecione os arquivos"})
                 }
+                
+                // if(j('.addDataTable').length) {
+                //     j(this).DataTable()
+                // }
 
                 j('#btn_scroll').click(function() {
                     window.scrollTo({top:0, behavior: 'smooth'})
