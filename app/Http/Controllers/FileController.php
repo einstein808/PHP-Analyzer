@@ -9,16 +9,15 @@ use SegWeb\Http\Controllers\Tools;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use SegWeb\FileResults;
 
 class FileController extends Controller
 {
     public function index() {
-        $file_content = null;
-        $originalname = null;
-        return view('index', compact(['file_content', 'originalname']));
+        return view('index', ['file_content' => null, 'originalname' => null]);
     }
 
-    private function getJsonTerms() {
+    public function getJsonTerms() {
         $json_file = Storage::disk('local')->get('terms/terms.json');
         return json_decode($json_file, true);
     }
@@ -38,19 +37,17 @@ class FileController extends Controller
             return view('index', compact(['file_content', 'file']));
         } else {
             $msg = "Tipo de arquivo não permitido! Por favor, envie um arquivo PHP.";
-            return view('index', compact(['msg']));
+            return view('index', ['msg' => $msg]);
         }
     }
 
     function getFileById($id) {
-        $file = DB::table('files')->find($id);
-        return $file;
+        return DB::table('files')->find($id);
     }
 
     public function analiseFile($id_file) {
         try {
             $file = $this->getFileById($id_file);
-            $tools = new Tools();
             $terms = $this->getJsonTerms();
             $file_location = Storage::disk('local')->getDriver()->getAdapter()->applyPathPrefix($file->file_path);
             $fn = fopen("$file_location","r");
@@ -59,7 +56,13 @@ class FileController extends Controller
                 $file_line = fgets($fn);
                 foreach($terms as $term_type_key => $term_types) {
                     foreach ($term_types as $term) {
-                        if($tools->contains($term, $file_line)) {
+                        if(Tools::contains($term, $file_line)) {
+                            // $file_results = new FileResults();
+                            // $file_results->file_id = $id_file;
+                            // $file_results->line_number = $i+1;
+                            // $file_results->line_content = $file_line;
+                            // $file_results->line_result = ;
+                            // $file_results->line_problem = ;
                             $file_content[$i][$term_type_key] = $term;
                         }
                     }
@@ -75,13 +78,11 @@ class FileController extends Controller
     }
 
     public function indexGithub() {
-        $msg = NULL;
-        return view('github', compact(['msg']));
+        return view('github', ['msg' => null]);
     }
 
     public function downloadGithub(Request $request) {
-        $tools = new Tools();
-        if($tools->contains("github", $request->github_link)) {
+        if(Tools::contains("github", $request->github_link)) {
             try {
                 $github_link = substr($request->github_link, -1) == '/' ? substr_replace($request->github_link ,"", -1)  : $request->github_link;
                 
