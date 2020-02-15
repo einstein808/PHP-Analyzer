@@ -24,10 +24,15 @@ class FileController extends Controller
 
     public function submitFile(Request $request) {
         if($request->file('file')->getClientMimeType() == 'application/x-php') {
-            $user = Auth::user();
+            if(Auth::check()) {
+                $user = Auth::user();
+                $user_id = $user->id;
+            } else {
+                $user_id = 0;
+            }
             
             $file = new File();
-            $file->user_id = $user->id;
+            $file->user_id = $user_id;
             $file->file_path = $request->file('file')->store('uploads', 'local');
             $file->original_file_name = $request->file('file')->getClientOriginalName();
             $file->type = "File";
@@ -118,10 +123,6 @@ class FileController extends Controller
             return view('github', compact(['msg']));
         }
     }   
-
-    public function load_results(Request $request) {
-        echo "aqui";
-    }
 
     public function indexYourFiles() {
         $files = $this->getAllByUserId();

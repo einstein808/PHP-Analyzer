@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTermsTable extends Migration
+class CreateTermTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateTermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('terms', function (Blueprint $table) {
+        Schema::create('term_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('term')->unique();
-            $table->bigInteger('term_type_id');
+            $table->string('term_type')->unique();
+            $table->string('color');
             $table->timestamps();
-            $table->foreign('term_type_id')->references('id')->on('term_types')->onDelete('cascade');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateTermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('terms');
+        Schema::dropIfExists('term_types');
     }
 }
