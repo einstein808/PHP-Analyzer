@@ -2,17 +2,19 @@
 
 namespace SegWeb\Http\Controllers;
 
+use SegWeb\FileResults;
 use Illuminate\Http\Request;
-use SegWeb\Terms;
+use Illuminate\Support\Facades\DB;
 
-class TermController extends Controller
+class FileResultsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         //
     }
 
@@ -21,7 +23,8 @@ class TermController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -31,27 +34,30 @@ class TermController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \SegWeb\FileResults  $fileResults
      * @return \Illuminate\Http\Response
      */
-    public function show() {
-        
+    public function show(FileResults $fileResults)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \SegWeb\FileResults  $fileResults
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit(FileResults $fileResults)
+    {
         //
     }
 
@@ -59,24 +65,30 @@ class TermController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \SegWeb\FileResults  $fileResults
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, FileResults $fileResults)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \SegWeb\FileResults  $fileResults
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(FileResults $fileResults)
+    {
         //
     }
 
-    public function getTerm($id=NULL) {
-        return empty($id) ? Terms::get() : Terms::where('id', $id)->get();
+    public function getAllByFileId($file_id) {
+        return DB::table('file_results')
+                ->leftJoin('terms', 'file_results.term_id', '=', 'terms.id')
+                ->leftJoin('term_types', 'terms.term_type_id', '=', 'term_types.id')
+                ->where('file_results.file_id', $file_id)
+                ->get(['line_number', 'line_content', 'term', 'term_type', 'color']);
     }
 }

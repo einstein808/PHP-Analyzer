@@ -1,7 +1,7 @@
 @extends('templates.template')
 @section('content')
     <div class="row">
-        @if(!empty($file_content))
+        @if(!empty($file))
         <div class="container">
             <div class="col-md-12">
                 <div class="card">
@@ -16,34 +16,18 @@
                             <code style="color: black !important;">
                                 <table class="code-border w100">
                                     <tbody>
-                                        {{$result = NULL}}
-                                        @foreach ($file_content as $key => $content)
+                                        @foreach($file_content as $line_number => $line_content)
                                         @php
-                                            $color = 'green';
-                                            foreach ($content as $term_type => $term) {
-                                                if($term_type == 'disabled_functions') {
-                                                    $color = 'red';
-                                                    $result[] = [
-                                                        'line' => 1+$key,
-                                                        'error_type' => $term_type,
-                                                        'error' => "Uso de $term"
-                                                    ];
-                                                } 
-                                                else if($term_type == 'program_execution_functions') {
-                                                    if($color != 'red') {
-                                                        $color = 'yellow';
-                                                        $result[] = [
-                                                            'line' => 1+$key,
-                                                            'error_type' => $term_type,
-                                                            'error' => "Uso de ".$term
-                                                        ];
-                                                    }
-                                                }   
+                                        $color = 'green';
+                                        foreach($file_results as $key => $file_result) {
+                                            if($file_result->line_number == $line_number) {
+                                                $color = $file_result->color;
                                             }
+                                        }
                                         @endphp
-                                        <tr class="unselectable" id="line-{{1+$key}}">
-                                            <td class="pure-{{$color}} key-style">{{(1+$key). " - "}}</td>
-                                            <td class="pastel-{{$color}}">{{$content['text']}}</td>
+                                        <tr class="unselectable" id="line-{{$line_number}}">
+                                            <td class="pure-{{$color}} key-style">{{($line_number). " - "}}</td>
+                                            <td class="pastel-{{$color}}">{{$line_content}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -60,15 +44,15 @@
                         <h1>Resultados</h1>
                     </div>
                     <div class="card-body">
-                        @if(!empty($result)) 
+                        @if(!empty($file_results)) 
                             <div class="list-group-flush">
-                                @foreach ($result as $value)
-                                    <div class="list-group-item list-group-item-action line_result" id="line_result-{{$value['line']}}">
+                                @foreach ($file_results as $results)
+                                    <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
                                         <div class="w-100">
-                                            <h5 class="mb-1">Linha: {{$value['line']}}</h5>
+                                            <h5 class="mb-1">Linha: {{$results->line_number}}</h5>
                                             <br>
-                                            <p><span class="mb-1">Tipo do erro: </span><a href="">{{$value['error_type']}}</a></p>
-                                            <p class="mb-1">Erro: <span>{{$value['error']}}</span></p>
+                                            <p><span class="mb-1">Tipo do erro: </span><a href="">{{$results->term_type}}</a></p>
+                                            <p class="mb-1">Erro: <span>{{$results->term}}</span></p>
                                         </div>
                                     </div>
                                 @endforeach

@@ -6,6 +6,8 @@ use Chumper\Zipper\Facades\Zipper;
 use Illuminate\Http\Request;
 use SegWeb\File;
 use SegWeb\Http\Controllers\Tools;
+use SegWeb\Http\Controllers\TermController;
+use SegWeb\Http\Controllers\FileResultsController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -39,7 +41,8 @@ class FileController extends Controller
             $file->save();
             
             $file_content = $this->analiseFile($file->id);
-            return view('index', compact(['file_content', 'file']));
+            $file_results_controller = new FileResultsController();
+            return view('index', ['file'=>$file, 'file_results' => $file_results_controller->getAllByFileId($file->id), 'file_content' => $file_content]);
         } else {
             $msg = "Tipo de arquivo não permitido! Por favor, envie um arquivo PHP.";
             return view('index', ['msg' => $msg]);
@@ -53,27 +56,43 @@ class FileController extends Controller
     public function analiseFile($id_file) {
         try {
             $file = $this->getFileById($id_file);
-            $terms = $this->getJsonTerms();
+            $term = new TermController();
+            $terms = $term->getTerm();
+
             $file_location = Storage::disk('local')->getDriver()->getAdapter()->applyPathPrefix($file->file_path);
             $fn = fopen("$file_location","r");
-            $i = 0;
+            $line_number = 1;
+            $file_content = NULL;
             while(!feof($fn)) {
                 $file_line = fgets($fn);
-                foreach($terms as $term_type_key => $term_types) {
-                    foreach ($term_types as $term) {
-                        if(Tools::contains($term, $file_line)) {
-                            // $file_results = new FileResults();
-                            // $file_results->file_id = $id_file;
-                            // $file_results->line_number = $i+1;
-                            // $file_results->line_content = $file_line;
-                            // $file_results->line_result = ;
-                            // $file_results->line_problem = ;
-                            $file_content[$i][$term_type_key] = $term;
-                        }
+
+                foreach($terms as $term) {
+                    if(Tools::contains($term->term, $file_line)) {
+                        $file_results = new FileResults();
+                        $file_results->file_id = $id_file;
+                        $file_results->line_number = $line_number;
+                        $file_results->line_content = $file_line;
+                        $file_results->term_id = $term->id;
+                        $file_results->save();
                     }
                 }
-                $file_content[$i]['text'] = $file_line;
-                $i++;
+                $file_content[$line_number] = $file_line;
+                $line_number++;
+                
+                // foreach($terms as $term_type_key => $term_types) {
+                //     foreach ($term_types as $term) {
+                //         if(Tools::contains($term, $file_line)) {
+                    //             // $file_results = new FileResults();
+                    //             // $file_results->file_id = $id_file;
+                    //             // $file_results->line_number = $line_number+1;
+                    //             // $file_results->line_content = $file_line;
+                    //             // $file_results->line_result = ;
+                    //             // $file_results->line_problem = ;
+                    //             $file_content[$line_number][$term_type_key] = $term;
+                    //         }
+                    //     }
+                    // }
+                    // $line_number++;
             }
             fclose($fn);
             return $file_content;
