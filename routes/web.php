@@ -25,6 +25,4 @@ Route::post('/github', 'FileController@downloadGithub');
 
 Route::get('/yourfiles', 'FileController@indexYourFiles');
 
-// Route::post('/ajax_result', 'FileController@load_results');
-
 Route::get('/yourfiles/{id}', 'FileResultsController@showFileResults');

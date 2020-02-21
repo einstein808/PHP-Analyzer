@@ -5,9 +5,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery.toast.js') }}"></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/jquery.toast.css') }}" rel="stylesheet">
         <title>SegWeb</title>
     </head>
     <body>
@@ -81,10 +83,20 @@
                 j('#btn_scroll').click(function() {
                     window.scrollTo({top:0, behavior: 'smooth'})
                 })
+
+                
             })
         </script>
         @if (!empty($msg))
-            <p>{{$msg}}</p>
-        @endif
+        <script>
+            j.toast({
+                heading: 'Informação!',
+                icon: "{{$msg['type']}}",
+                text: "{{$msg['text']}}",
+                showHideTransition: 'slide',
+                position: 'top-center',
+            })
+        </script>
+    @endif
     </footer>
 </html>

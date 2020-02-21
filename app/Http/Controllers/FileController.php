@@ -25,6 +25,10 @@ class FileController extends Controller
     }
 
     public function submitFile(Request $request) {
+        $msg = [
+            'text' => 'Arquivo enviado com sucesso!',
+            'type' => 'success'
+        ];
         if($request->file('file')->getClientMimeType() == 'application/x-php') {
             if(Auth::check()) {
                 $user = Auth::user();
@@ -42,9 +46,10 @@ class FileController extends Controller
             
             $file_content = $this->analiseFile($file->id);
             $file_results_controller = new FileResultsController();
-            return view('index', ['file'=>$file, 'file_results' => $file_results_controller->getAllByFileId($file->id), 'file_content' => $file_content]);
+            return view('index', ['file'=>$file, 'file_results' => $file_results_controller->getAllByFileId($file->id), 'file_content' => $file_content, 'msg' => $msg]);
         } else {
-            $msg = "Tipo de arquivo não permitido! Por favor, envie um arquivo PHP.";
+            $msg['text'] = "Tipo de arquivo não permitido! Por favor, envie um arquivo PHP.";
+            $msg['type'] = "error";
             return view('index', ['msg' => $msg]);
         }
     }
@@ -91,6 +96,10 @@ class FileController extends Controller
     }
 
     public function downloadGithub(Request $request) {
+        $msg = [
+            'text' => 'Projeto baixado com sucesso!',
+            'type' => 'success'
+        ];
         if(Tools::contains("github", $request->github_link)) {
             try {
                 $github_link = substr($request->github_link, -1) == '/' ? substr_replace($request->github_link ,"", -1)  : $request->github_link;
@@ -114,16 +123,20 @@ class FileController extends Controller
                     $file->type = "Github";
                     $file->save();
 
-                    return view('analisis', compact(['analisis', 'file_location']));
+                    return view('analisis', compact(['analisis', 'file_location', 'msg']));
                 } else {
-                    $msg = "Erro ao realizar a operação";
+                    $msg['text'] = "Erro ao realizar a operação";
+                    $msg['type'] = "error";
                     return view('github', compact(['msg']));
                 }
-            } catch (Exception $msg) {
+            } catch (Exception $e) {
+                $msg['text'] = "Erro ao realizar a operação";
+                $msg['type'] = "error";
                 return view('github', compact(['msg']));
             }
         } else {
-            $msg = "Link inválido!";
+            $msg['text'] = "Link inválido!";
+            $msg['type'] = "error";
             return view('github', compact(['msg']));
         }
     }   
