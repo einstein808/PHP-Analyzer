@@ -19,7 +19,7 @@
                         <td>{{$file->original_file_name}}</td>
                         <td>{{Tools::data($file->created_at)}}</td>
                         <td>{{$file->type}}</td>
-                        <td></td>
+                        <td><a href="/yourfiles/{{$file->id}}" class="btn btn-outline-info">Resultados</a></td>
                     </tr>
                     @endforeach
                 </tbody>

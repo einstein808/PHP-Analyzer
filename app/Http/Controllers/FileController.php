@@ -78,21 +78,6 @@ class FileController extends Controller
                 }
                 $file_content[$line_number] = $file_line;
                 $line_number++;
-                
-                // foreach($terms as $term_type_key => $term_types) {
-                //     foreach ($term_types as $term) {
-                //         if(Tools::contains($term, $file_line)) {
-                    //             // $file_results = new FileResults();
-                    //             // $file_results->file_id = $id_file;
-                    //             // $file_results->line_number = $line_number+1;
-                    //             // $file_results->line_content = $file_line;
-                    //             // $file_results->line_result = ;
-                    //             // $file_results->line_problem = ;
-                    //             $file_content[$line_number][$term_type_key] = $term;
-                    //         }
-                    //     }
-                    // }
-                    // $line_number++;
             }
             fclose($fn);
             return $file_content;
@@ -102,7 +87,7 @@ class FileController extends Controller
     }
 
     public function indexGithub() {
-        return view('github', ['msg' => null]);
+        return view('github');
     }
 
     public function downloadGithub(Request $request) {
@@ -145,7 +130,7 @@ class FileController extends Controller
 
     public function indexYourFiles() {
         $files = $this->getAllByUserId();
-        return view('yourfiles', compact('files'));
+        return view('your_files', compact('files'));
     }
 
     public function getAllByUserId() {
