@@ -58,8 +58,14 @@
                                     <div class="w-100">
                                         <h5 class="mb-1">Linha: {{$results->line_number}}</h5>
                                         <br>
-                                        <p><span class="mb-1">Tipo do erro: </span><a href="">{{$results->term_type}}</a></p>
-                                        <p class="mb-1">Erro: <span>{{$results->term}}</span></p>
+                                        <p><span class="mb-1">Tipo do problema: </span><a href="">{{$results->term_type}}</a></p>
+                                        <p class="mb-1">Problema: 
+                                            @if($results->term_type != "disabled_functions")
+                                            <a title="Clique aqui para ver a definição da função" target="_blank" href="https://www.php.net/manual/en/function.{{$results->term}}">{{$results->term}}</a>
+                                            @else
+                                                <span>{{$results->term}}</span>
+                                            @endif
+                                        </p>
                                     </div>
                                 </div>
                             @endforeach
