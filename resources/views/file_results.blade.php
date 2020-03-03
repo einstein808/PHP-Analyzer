@@ -1,6 +1,5 @@
 @extends('templates.template')
 @section('content')
-@php use SegWeb\Http\Controllers\Tools;@endphp
 
 <div class="col-md-12 mt-2">
     <div class="row">

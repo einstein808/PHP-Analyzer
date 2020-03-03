@@ -3,7 +3,7 @@
 namespace SegWeb\Http\Controllers;
 
 use SegWeb\FileResults;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FileResultsController extends Controller {

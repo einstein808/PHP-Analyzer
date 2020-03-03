@@ -102,7 +102,7 @@ class FileController extends Controller
 
     public function getAllByUserId() {
         $user = Auth::user();
-        return File::where('user_id', $user->id)->orderByRaw('id DESC')->get();
+        return File::where('user_id', $user->id)->where('type', '<>', 'Github Repository')->orderByRaw('id DESC')->get();
     }
 
     public static function getFileContentArray($id_file) {
