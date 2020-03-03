@@ -11,10 +11,11 @@
     <br>
     <div class="card">
         <div class="card-header">
+            {{-- MOSTRAR O NOME DO ARQUIVO!!!!!! --}}
             <h1>Resultados</h1>
         </div>
         <div class="card-body">
-            @if(!empty($file_results)) 
+            @if(count($file_results) > 0) 
                 <div class="list-group-flush">
                     @foreach ($file_results as $results)
                         <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
@@ -27,6 +28,8 @@
                         </div>
                     @endforeach
                 </div>
+                @else
+                <p class="mb-1">Nenhum problema encontrado</span></p>
             @endif
         </div>
     </div>

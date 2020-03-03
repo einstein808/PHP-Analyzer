@@ -2,12 +2,14 @@
 
 namespace SegWeb\Http\Controllers;
 use Auth;
-use Illuminate\Http\Request;
 use Chumper\Zipper\Facades\Zipper;
-use SegWeb\Http\Controllers\Tools;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use SegWeb\FileResults;
 use SegWeb\File;
+use SegWeb\FileResults;
+use SegWeb\Http\Controllers\Tools;
+use SegWeb\Http\Controllers\FileController;
+use SegWeb\Http\Controllers\FileResultsController;
 
 class GithubFilesController extends Controller
 {
@@ -18,11 +20,8 @@ class GithubFilesController extends Controller
     }
 
     public function downloadGithub(Request $request) {
-        $msg = [
-            'text' => 'Projeto baixado com sucesso!',
-            'type' => 'success'
-        ];
         if(Tools::contains("github", $request->github_link)) {
+            $msg = ['text' => 'Projeto baixado com sucesso!', 'type' => 'success'];
             try {
                 if(Auth::check()) {
                     $user = Auth::user();
@@ -30,6 +29,7 @@ class GithubFilesController extends Controller
                 } else {
                     $user_id = 0;
                 }
+                // Baixa o arquivo .zip do github
                 $github_link = substr($request->github_link, -1) == '/' ? substr_replace($request->github_link ,"", -1)  : $request->github_link;
                 
                 $url = $github_link.'/archive/'.$request->branch.'.zip';
@@ -37,11 +37,14 @@ class GithubFilesController extends Controller
                 $now = date('ymdhis');
                 $name = $folder.$now.'_'.substr($url, strrpos($url, '/') + 1);
                 $put = Storage::put($name, file_get_contents($url));
+
                 if($put) {
+                    // Extrai e exclui o arquivo .zip do github
                     $file_location = base_path('storage/app/'.$folder.$now.'_'.$request->branch);
                     Zipper::make(base_path('storage/app/'.$name))->extractTo($file_location);
                     unlink(base_path('storage/app/'.$name));
                     
+                    // Salva o registro do repositório do github
                     $file = new File();
                     $file->user_id = $user_id;
                     $file->file_path = $folder.$now.'_'.$request->branch;
@@ -50,13 +53,21 @@ class GithubFilesController extends Controller
                     $file->type = "Github Repository";
                     $file->save();
 
+                    // Realiza a análise dos arquivos do repositório
                     $this->analiseGithubFiles($file_location);
-                    echo "<pre>";
-                    print_r($this->github_files_ids);
-                    echo "</pre>";
+                    
+                    // Busca o conteúdo dos arquivos para exibição
+                    $file_results_controller = new FileResultsController();
+                    $file_contents = NULL;
+                    if(!empty($this->github_files_ids)) {
+                        foreach($this->github_files_ids as $value) {
+                            $file_contents[$value]['content'] = FileController::getFileContentArray($value);
+                            $file_contents[$value]['results'] = $file_results_controller->getAllByFileId($value);
+                            $file_contents[$value]['file'] = FileController::getFileById($value);
+                        }
+                    }
 
-                    exit();
-                    return view('analisis', compact(['file_location', 'msg']));
+                    return view('github', compact(['file', 'file_contents', 'msg']));
                 } else {
                     $msg['text'] = "Erro ao efetuar download";
                     $msg['type'] = "error";
@@ -106,7 +117,6 @@ class GithubFilesController extends Controller
 
                         $fn = fopen($full_file_path, 'r');
                         $line_number = 1;
-                        $file_content = NULL;
                         while(!feof($fn)) {
                             $file_line = fgets($fn);
                             foreach($terms as $term) {
@@ -118,7 +128,6 @@ class GithubFilesController extends Controller
                                     $file_results->save();
                                 }
                             }
-                            $file_content[$line_number] = $file_line;
                             $line_number++;
                         }
                         fclose($fn);
@@ -127,4 +136,6 @@ class GithubFilesController extends Controller
             }
         }
     }
+
+    
 }
