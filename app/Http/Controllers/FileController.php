@@ -2,7 +2,7 @@
 
 namespace SegWeb\Http\Controllers;
 
-use Chumper\Zipper\Facades\Zipper;
+
 use Illuminate\Http\Request;
 use SegWeb\File;
 use SegWeb\Http\Controllers\Tools;
@@ -76,7 +76,6 @@ class FileController extends Controller
                         $file_results = new FileResults();
                         $file_results->file_id = $id_file;
                         $file_results->line_number = $line_number;
-                        $file_results->line_content = $file_line;
                         $file_results->term_id = $term->id;
                         $file_results->save();
                     }
@@ -91,56 +90,6 @@ class FileController extends Controller
         }
     }
 
-    public function indexGithub() {
-        return view('github');
-    }
-
-    public function downloadGithub(Request $request) {
-        $msg = [
-            'text' => 'Projeto baixado com sucesso!',
-            'type' => 'success'
-        ];
-        if(Tools::contains("github", $request->github_link)) {
-            try {
-                $github_link = substr($request->github_link, -1) == '/' ? substr_replace($request->github_link ,"", -1)  : $request->github_link;
-                
-                $url = $github_link.'/archive/'.$request->branch.'.zip';
-                $folder = 'github_uploads/';
-                $now = date('ymdhis');
-                $name = $folder.$now.'-'.substr($url, strrpos($url, '/') + 1);
-                $put = Storage::put($name, file_get_contents($url));
-                if($put === TRUE) {
-                    $file_location = base_path('storage/app/'.$folder.$now.'-'.$request->branch);
-                    Zipper::make(base_path('storage/app/'.$name))->extractTo($file_location);
-                    $analisis = TRUE;
-
-                    $user = Auth::user();
-                    $file = new File();
-                    $file->user_id = $user->id;
-                    $file->file_path = $folder.$now.'-'.$request->branch;
-                    $project_name = explode('/', $github_link);
-                    $file->original_file_name = $project_name[sizeof($project_name) - 1];
-                    $file->type = "Github";
-                    $file->save();
-
-                    return view('analisis', compact(['analisis', 'file_location', 'msg']));
-                } else {
-                    $msg['text'] = "Erro ao realizar a operação";
-                    $msg['type'] = "error";
-                    return view('github', compact(['msg']));
-                }
-            } catch (Exception $e) {
-                $msg['text'] = "Erro ao realizar a operação";
-                $msg['type'] = "error";
-                return view('github', compact(['msg']));
-            }
-        } else {
-            $msg['text'] = "Link inválido!";
-            $msg['type'] = "error";
-            return view('github', compact(['msg']));
-        }
-    }   
-
     public function indexYourFiles() {
         $files = $this->getAllByUserId();
         return view('your_files', compact('files'));
@@ -148,6 +97,6 @@ class FileController extends Controller
 
     public function getAllByUserId() {
         $user = Auth::user();
-        return File::where('user_id', $user->id)->get();
+        return File::where('user_id', $user->id)->orderByRaw('id DESC')->get();
     }
 }

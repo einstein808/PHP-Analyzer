@@ -19,9 +19,9 @@ Route::get('/', 'FileController@index');
 
 Route::post('/', 'FileController@submitFile');
 
-Route::get('/github', 'FileController@indexGithub');
+Route::get('/github', 'GithubFilesController@index');
 
-Route::post('/github', 'FileController@downloadGithub');
+Route::post('/github', 'GithubFilesController@downloadGithub');
 
 Route::get('/yourfiles', 'FileController@indexYourFiles');
 

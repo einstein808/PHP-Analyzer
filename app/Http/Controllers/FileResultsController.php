@@ -12,7 +12,7 @@ class FileResultsController extends Controller {
                 ->leftJoin('terms', 'file_results.term_id', '=', 'terms.id')
                 ->leftJoin('term_types', 'terms.term_type_id', '=', 'term_types.id')
                 ->where('file_results.file_id', $file_id)
-                ->get(['line_number', 'line_content', 'term', 'term_type', 'color']);
+                ->get(['line_number', 'term', 'term_type', 'color']);
     }
     public function showFileResults($file_id) {
         $file_results = $this->getAllByFileId($file_id);

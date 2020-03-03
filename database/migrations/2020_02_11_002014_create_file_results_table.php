@@ -17,7 +17,6 @@ class CreateFileResultsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('file_id');
             $table->integer('line_number');
-            $table->text('line_content');
             $table->bigInteger('term_id');
             $table->timestamps();
             $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
