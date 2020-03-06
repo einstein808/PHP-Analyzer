@@ -31,6 +31,17 @@
                             <a class="nav-link" href="/yourfiles">Seus arquivos <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
                         </li>
                     @endif
+                    {{-- VALIDAR PARA APENAS ADMINISTRADORES DO SISTEMA!!!!!!!!! --}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Gerenciar
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/term_types">Tipos de Termos</a>
+                            <a class="dropdown-item" href="/terms">Termos</a>
+                        </div>
+                    </li>
+                    {{-- ------------------------------------------------------- --}}
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @guest
