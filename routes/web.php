@@ -26,3 +26,7 @@ Route::post('/github', 'GithubFilesController@downloadGithub');
 Route::get('/yourfiles', 'FileController@indexYourFiles');
 
 Route::get('/yourfiles/{id}', 'FileResultsController@showFileResults');
+
+Route::get('/term_types', 'TermTypesController@index');
+
+Route::post('/term_types', 'TermTypesController@store');

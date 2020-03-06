@@ -88,7 +88,7 @@
 
             j(document).ready(function() {
                 if(j(":file").length) {
-                    j(":file").filestyle({placeholder: "Selecione os arquivos"})
+                    j(":file").filestyle({placeholder: "Selecione o arquivo"})
                 }
 
                 j('#btn_scroll').click(function() {

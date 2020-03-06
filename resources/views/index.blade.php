@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1>Arquivos analisados</h1>
+                        <h1>Arquivo analisado</h1>
                     </div>
                     <div class="card-title text-center">
                         <h4>{{$file->original_file_name}}</h4>
@@ -82,9 +82,9 @@
                         <div class="card-header text-center">
                             <h3>
                                 @if(empty($file_content))
-                                    Enviar arquivos
+                                    Enviar arquivo
                                 @else
-                                    Enviar novos arquivos
+                                    Enviar novo arquivo
                                 @endif
                             </h3>
                         </div>
