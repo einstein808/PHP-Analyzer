@@ -29,4 +29,6 @@ Route::get('/yourfiles/{id}', 'FileResultsController@showFileResults');
 
 Route::get('/term_types', 'TermTypesController@index');
 
+Route::get('/term_types/{id}', 'TermTypesController@edit');
+
 Route::post('/term_types', 'TermTypesController@store');

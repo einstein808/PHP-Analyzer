@@ -1,11 +1,24 @@
 @extends('templates.template')
 @section('content')
+@php
+    use SegWeb\Http\Controllers\Tools;
+    if(isset($term_type)) {
+        $term = $term_type->term_type;
+        $color = $term_type->color;
+        $id = $term_type->id;
+    } else {
+        $term = NULL;
+        $color = NULL;
+        $id = NULL;
+    }
+@endphp
 <div class="row mt-2">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <form action="/term_types" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id" value="{{$id}}">
                     <div class="card">
                         <div class="card-header text-center">
                             <h3>Cadastro de Tipos de Temos</h3>
@@ -15,12 +28,12 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="term_type">Tipo de termo:</label><input type="text" name="term_type" class="form-control">
+                                            <label for="term_type">Tipo de termo:</label><input type="text" name="term_type" class="form-control" value="{{$term}}">
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
-                                            <label for="color">Cor:</label><input type="text" name="color" class="form-control">
+                                            <label for="color">Cor:</label><input type="text" name="color" class="form-control" value="{{$color}}">
                                         </div>
                                     </div>
                                 </div>
@@ -28,7 +41,11 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                @if(!empty($id))
+                                    <button type="submit" class="btn btn-primary pull-right">Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                @else
+                                    <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -58,7 +75,7 @@
                                             <tr class="clickable" onclick="document.location='/term_types/{{$term_type->id}}'">
                                                 <td>{{$term_type->term_type}}</td>
                                                 <td>{{$term_type->color}}</td>
-                                                <td>{{$term_type->created_at}}</td>
+                                                <td>{{Tools::db_to_date_time($term_type->created_at)}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -74,4 +91,9 @@
         </div>
     </div>
 </div>
+@php
+    unset($term);
+    unset($color);
+    unset($id);
+@endphp
 @endsection
