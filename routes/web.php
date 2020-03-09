@@ -32,3 +32,9 @@ Route::get('/term_types', 'TermTypesController@index');
 Route::get('/term_types/{id}', 'TermTypesController@edit');
 
 Route::post('/term_types', 'TermTypesController@store');
+
+Route::get('/terms', 'TermController@index');
+
+Route::get('/terms/{id}', 'TermController@edit');
+
+Route::post('/terms', 'TermController@store');

@@ -44,27 +44,6 @@ class TermTypesController extends Controller
         return view('term_types', compact('term_types', 'term_type'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \SegWeb\TermTypes  $termTypes
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TermTypes $termTypes) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \SegWeb\TermTypes  $termTypes
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TermTypes $termTypes) {
-        //
-    }
-
     public function getAll() {
         return TermTypes::all();
     }
