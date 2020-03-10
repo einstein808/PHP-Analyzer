@@ -7,21 +7,10 @@ use Illuminate\Http\Request;
 
 class TermTypesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index() {
         return view('term_types', ['term_types'=>$this->getAll(), 'term_type'=>NULL]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         if(empty($request->id)) {
             $term_type = new TermTypes();

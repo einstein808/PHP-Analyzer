@@ -28,12 +28,12 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="term_type">Tipo de termo:</label><input type="text" name="term_type" class="form-control" value="{{$term}}">
+                                            <label for="term_type">Tipo de termo:</label><input type="text" name="term_type" class="form-control" value="{{$term}}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
-                                            <label for="color">Cor:</label><input type="text" name="color" class="form-control" value="{{$color}}">
+                                            <label for="color">Cor:</label><input type="text" name="color" class="form-control" value="{{$color}}" required>
                                         </div>
                                     </div>
                                 </div>

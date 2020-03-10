@@ -4,22 +4,38 @@ namespace SegWeb\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SegWeb\Terms;
+use SegWeb\TermTypes;
+use Illuminate\Support\Facades\DB;
 
 class TermController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index() {
-        return view('terms', ['terms'=>$this->getAll(), 'term'=>NULL]);
+        return view('terms', ['terms'=>$this->getAllJoinTermTypes(), 'term'=>NULL, 'term_types'=>TermTypes::all()]);
+    }
+
+    public function store(Request $request) {
+        if(empty($request->id)) {
+            $term = new Terms();
+            $msg['text'] = 'Termo inserido com sucesso!';
+        } else {
+            $term = Terms::find($request->id);
+            $msg['text'] = 'Termo atualizado com sucesso!';
+        }
+        $term->term = $request->term;
+        $term->term_type_id = $request->term_type;
+        $term->save();
+        $msg['type'] = 'success';
+        $term_types = TermTypes::all();
+        $terms = $this->getAllJoinTermTypes();
+        return view('terms', compact('msg', 'term', 'terms', 'term_types'));
     }
 
     public function edit($id) {
-        $term_type = TermTypes::findOrFail($id);
-        $term_types = $this->getAll();
-        return view('term_types', compact('term_types', 'term_type'));
+        $term = Terms::findOrFail($id);
+        $terms = $this->getAllJoinTermTypes();
+        $term_types = TermTypes::all();
+        return view('terms', compact('terms', 'term', 'term_types'));
     }
 
     public function getTerm($id=NULL) {
@@ -28,5 +44,11 @@ class TermController extends Controller
 
     public function getAll() {
         return Terms::all();
+    }
+
+    public function getAllJoinTermTypes() {
+        return DB::table('terms')
+                ->leftJoin('term_types', 'terms.term_type_id', '=', 'term_types.id')
+                ->get(['terms.id', 'terms.term', 'term_types.term_type', 'terms.created_at']);
     }
 }
