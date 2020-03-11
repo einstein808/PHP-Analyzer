@@ -48,7 +48,7 @@ class FileController extends Controller
             $file_results_controller = new FileResultsController();
             return view('index', [
                 'file' => $file, 
-                'file_results' => $file_results_controller->getAllByFileId($file->id), 
+                'file_results' => $file_results_controller->getSingleByFileId($file->id), 
                 'file_content' => $file_content, 
                 'msg' => $msg
             ]);
@@ -122,5 +122,11 @@ class FileController extends Controller
         } else {
             return NULL;
         }
+    }
+
+    public function getGithubFiles($file_id) {
+        return DB::table('files')
+                ->where('repository_id', $file_id)
+                ->get();
     }
 }

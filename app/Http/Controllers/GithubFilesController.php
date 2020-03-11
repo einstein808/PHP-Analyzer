@@ -54,7 +54,7 @@ class GithubFilesController extends Controller
                     $file->save();
 
                     // Realiza a análise dos arquivos do repositório
-                    $this->analiseGithubFiles($file_location);
+                    $this->analiseGithubFiles($file_location, $file->id);
                     
                     // Busca o conteúdo dos arquivos para exibição
                     $file_results_controller = new FileResultsController();
@@ -85,7 +85,7 @@ class GithubFilesController extends Controller
         }
     }  
 
-    public function analiseGithubFiles($dir) {
+    public function analiseGithubFiles($dir, $repository_id) {
         $ffs = scandir($dir);
         unset($ffs[array_search('.', $ffs, true)]);
         unset($ffs[array_search('..', $ffs, true)]);
@@ -97,7 +97,7 @@ class GithubFilesController extends Controller
                 $full_file_path = $dir."/".$ff;
                 $file_path = explode("storage/app/", $full_file_path)[1];
                 if(is_dir($full_file_path)) {
-                    $this->analiseGithubFiles($full_file_path);
+                    $this->analiseGithubFiles($full_file_path, $repository_id);
                 } else {
                     if(mime_content_type($full_file_path) == "text/x-php" || mime_content_type($full_file_path) == "application/x-php") {
                         if(Auth::check()) {
@@ -111,6 +111,7 @@ class GithubFilesController extends Controller
                         $file->file_path = $file_path;
                         $file->original_file_name = $ff;
                         $file->type = "Github File";
+                        $file->repository_id = $repository_id;
                         $file->save();
 
                         $this->github_files_ids[] = $file->id;

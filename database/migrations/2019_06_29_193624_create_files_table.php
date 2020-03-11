@@ -19,6 +19,7 @@ class CreateFilesTable extends Migration
             $table->string('file_path');
             $table->string('original_file_name');
             $table->string('type');
+            $table->bigInteger('repository_id')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

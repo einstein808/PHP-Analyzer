@@ -10,7 +10,8 @@ class File extends Model
         'user_id',
         'file_path',
         'original_file_name',
-        'type'
+        'type',
+        'repository_id'
     ];
     protected $guarded = ['id', 'created_at', 'update_at'];
 
