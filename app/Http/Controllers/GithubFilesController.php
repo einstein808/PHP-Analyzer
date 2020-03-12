@@ -62,7 +62,7 @@ class GithubFilesController extends Controller
                     if(!empty($this->github_files_ids)) {
                         foreach($this->github_files_ids as $value) {
                             $file_contents[$value]['content'] = FileController::getFileContentArray($value);
-                            $file_contents[$value]['results'] = $file_results_controller->getAllByFileId($value);
+                            $file_contents[$value]['results'] = $file_results_controller->getSingleByFileId($value);
                             $file_contents[$value]['file'] = FileController::getFileById($value);
                         }
                     }
