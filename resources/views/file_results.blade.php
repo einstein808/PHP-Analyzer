@@ -8,9 +8,6 @@
         </div>
     </div>
     <br>
-    {{-- <pre>
-    {{print_r($file_results)}}
-    </pre> --}}
     @foreach ($file_results as $file_result)
         <div class="row">
             <div class="col-md-12 mt-2">
@@ -39,7 +36,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            @else
+                        @else
                             <p class="mb-1">Nenhum problema encontrado</span></p>
                         @endif
                     </div>
@@ -48,5 +45,4 @@
         </div>
     @endforeach
 </div>
-
 @endsection

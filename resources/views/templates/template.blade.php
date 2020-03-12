@@ -1,3 +1,18 @@
+@php
+    if(Auth::check()) {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $user_name = $user->name;
+        $user_email = $user->email;
+        $user_acc = $user->access_level;
+    } else {
+        $user_id = NULL;
+        $user_name = NULL;
+        $user_email = NULL;
+        $user_acc = NULL;
+    }
+@endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -27,20 +42,22 @@
                         <a class="nav-link" href="/github">Enviar repositório do Github <i class="fa fa-github" aria-hidden="true"></i><span class="sr-only"></span></a>
                     </li>
                     @if (Auth::check())    
-                        <li>
+                        <li class="nav-item active">
                             <a class="nav-link" href="/yourfiles">Seus arquivos <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
                         </li>
                     @endif
                     {{-- VALIDAR PARA APENAS ADMINISTRADORES DO SISTEMA!!!!!!!!! --}}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Gerenciar
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/term_types">Tipos de Termos</a>
-                            <a class="dropdown-item" href="/terms">Termos</a>
-                        </div>
-                    </li>
+                    @if ($user_acc == 'A')
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gerenciar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/term_types">Tipos de Termos</a>
+                                <a class="dropdown-item" href="/terms">Termos</a>
+                            </div>
+                        </li>
+                    @endif
                     {{-- ------------------------------------------------------- --}}
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -54,7 +71,7 @@
                             </li>
                         @endif
                     @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown active">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
