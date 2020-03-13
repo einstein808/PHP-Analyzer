@@ -48,10 +48,10 @@ class FileResultsController extends Controller {
         return view('file_results', compact('file_results'));
     }
 
-    public function countResultsByFileId($file_id) {
-        return DB::table('file_results')
-                    ->where('file_id', $file_id)
-                    ->count();
-    }
+    // public function countResultsByFileId($file_id) {
+    //     return DB::table('file_results')
+    //                 ->where('file_id', $file_id)
+    //                 ->count();
+    // }
 }
 

@@ -82,3 +82,7 @@
 .clickable {
     cursor: pointer;
 }
+
+.fa-exclamation-triangle {
+    color: #f34135 !important
+}

@@ -3,8 +3,19 @@
 
 @if(!empty($file))
 <div class="container">
-    <h1>Repositório: {{$file->original_file_name}}</h1>
-    @foreach($file_contents as $value)
+    @php
+        $count_results = 0;
+        foreach($file_contents as $value) {
+            $count_results += count($value['results']);
+        }
+    @endphp
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Repositório: {{$file->original_file_name}}</h1>
+            <h3>Foram encontrados {{$count_results}} problemas neste repositório!</h3>
+        </div>
+    </div>
+    @foreach($file_contents as $key => $value)
         @php
             $file_content = $value['content'];
             $file_results = $value['results'];
@@ -13,12 +24,20 @@
             unset($file_path[0]);
             $file_path = $file->original_file_name.'/'.implode('/', $file_path);
         @endphp
-        <div class="col-md-12 mt-4">
-            <div class="card">
-                <div class="card-header">
-                    <h4>{{$file_path}}</h4>
-                </div>
-                <div class="card-body">
+        <div class="card mt-2">
+            <div class="card-header clickable" data-toggle="collapse" data-target="#collapse-{{$key}}" title="Clique aqui para ver os detalhes do arquivo">
+                <h5>
+                    @if (count($file_results) > 0)
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+                    @endif
+                    {{$file_path}}
+                    @if (count($file_results) > 0)
+                        &nbsp;<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    @endif
+                </h5>
+            </div>
+            <div id="collapse-{{$key}}" class="collapse">
+                <div class="col-md-12 mt-1">
                     <pre>
                         <code style="color: black !important;">
                             <table class="code-border w100">
@@ -42,37 +61,44 @@
                         </code>
                     </pre>
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-12 mt-2">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Resultados do arquivo {{$file_path}}</h4>
-                </div>
-                <div class="card-body">
-                    @if(count($file_results) > 0) 
-                        <div class="list-group-flush">
-                            @foreach ($file_results as $results)
-                                <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
-                                    <div class="w-100">
-                                        <h5 class="mb-1">Linha: {{$results->line_number}}</h5>
-                                        <br>
-                                        <p><span class="mb-1">Tipo do problema: </span><a href="">{{$results->term_type}}</a></p>
-                                        <p class="mb-1">Problema: 
-                                            @if($results->term_type != "disabled_functions")
-                                            <a title="Clique aqui para ver a definição da função" target="_blank" href="https://www.php.net/manual/en/function.{{$results->term}}">{{$results->term}}</a>
-                                            @else
-                                                <span>{{$results->term}}</span>
-                                            @endif
-                                        </p>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Resultados</h4>
+                        </div>
+                        <div class="card-body">
+                            @if(count($file_results) > 0) 
+                                <div class="row">
+                                    <div class="container">
+                                        <div class="col-md-12">
+                                            <h2>Foram encontrados {{count($file_results)}} problemas!</h2>
+                                        </div>
                                     </div>
                                 </div>
-                            @endforeach
+                                <div class="list-group-flush">
+                                    @foreach ($file_results as $results)
+                                        <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
+                                            <div class="w-100">
+                                                <h5 class="mb-1">Linha: {{$results->line_number}}</h5>
+                                                <br>
+                                                <p><span class="mb-1">Tipo do problema: </span><a href="">{{$results->term_type}}</a></p>
+                                                <p class="mb-1">Problema: 
+                                                    @if($results->term_type != "disabled_functions")
+                                                    <a title="Clique aqui para ver a definição da função" target="_blank" href="https://www.php.net/manual/en/function.{{$results->term}}">{{$results->term}}</a>
+                                                    @else
+                                                        <span>{{$results->term}}</span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <p class="mb-1">Nenhum problema encontrado</span></p>
+                            @endif
                         </div>
-                    @else
-                        <p class="mb-1">Nenhum problema encontrado</span></p>
-                    @endif
+                    </div>
+                    <br>
                 </div>
             </div>
         </div>
@@ -83,38 +109,38 @@
 </button>
 @endif
 
-<div class="row mt-2">
-    <div class="container">
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-12">
         <form action="/github" method="post" enctype="multipart/form-data" id="form_github">
             @csrf
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>
-                            Enviar repositório do Github
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 offset-md-3">
-                                <input type="url" placeholder="https://github.com/mygithubprofile/mygithubproject" pattern="https://github.com/.*" name="github_link" id="github_link" class="form-control" required>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6 offset-md-3">
-                                <input type="text" name="branch" id="branch" placeholder="Branch ex:. master; prod; dev..." class="form-control" required>
-                            </div>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>
+                        Enviar repositório do Github
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <input type="url" placeholder="https://github.com/mygithubprofile/mygithubproject" pattern="https://github.com/.*" name="github_link" id="github_link" class="form-control" required>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-upload" aria-hidden="true"></i></button>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <input type="text" name="branch" id="branch" placeholder="Branch ex:. master; prod; dev..." class="form-control" required>
                         </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-upload" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
     </div>
 </div>
 

@@ -45,6 +45,13 @@
                     </div>
                     <div class="card-body">
                         @if(!empty($file_results)) 
+                            <div class="row">
+                                <div class="container">
+                                    <div class="col-md-12">
+                                        <h2>Foram encontrados {{count($file_results)}} problemas!</h2>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="list-group-flush">
                                 @foreach ($file_results as $results)
                                     <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
