@@ -36,7 +36,7 @@
                     @endif
                 </h5>
             </div>
-            <div id="collapse-{{$key}}" class="collapse">
+            <div id="collapse-{{$key}}" class="collapse swing-in-top-fwd">
                 <div class="col-md-12 mt-1">
                     <pre>
                         <code style="color: black !important;">

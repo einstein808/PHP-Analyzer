@@ -47,11 +47,5 @@ class FileResultsController extends Controller {
         $file_results = $this->getAllByFileId($file_id);
         return view('file_results', compact('file_results'));
     }
-
-    // public function countResultsByFileId($file_id) {
-    //     return DB::table('file_results')
-    //                 ->where('file_id', $file_id)
-    //                 ->count();
-    // }
 }
 
