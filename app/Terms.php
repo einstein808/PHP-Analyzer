@@ -4,8 +4,7 @@ namespace SegWeb;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Terms extends Model
-{
+class Terms extends Model {
     protected $filltable = [
         'term',
         'term_type_id',

@@ -5,8 +5,7 @@ namespace SegWeb\Http\Controllers;
 use SegWeb\TermTypes;
 use Illuminate\Http\Request;
 
-class TermTypesController extends Controller
-{
+class TermTypesController extends Controller {
     public function index() {
         return view('term_types', ['term_types'=>$this->getAll(), 'term_type'=>NULL]);
     }

@@ -7,8 +7,7 @@ use SegWeb\Terms;
 use SegWeb\TermTypes;
 use Illuminate\Support\Facades\DB;
 
-class TermController extends Controller
-{
+class TermController extends Controller {
     
     public function index() {
         return view('terms', ['terms'=>$this->getAllJoinTermTypes(), 'term'=>NULL, 'term_types'=>TermTypes::all()]);

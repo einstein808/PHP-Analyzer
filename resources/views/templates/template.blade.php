@@ -46,7 +46,6 @@
                             <a class="nav-link" href="/yourfiles">Seus arquivos <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
                         </li>
                     @endif
-                    {{-- VALIDAR PARA APENAS ADMINISTRADORES DO SISTEMA!!!!!!!!! --}}
                     @if ($user_acc == 'A')
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,7 +57,6 @@
                             </div>
                         </li>
                     @endif
-                    {{-- ------------------------------------------------------- --}}
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @guest
@@ -97,12 +95,6 @@
         <script type="text/javascript">
             j = jQuery.noConflict()
 
-            j.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': j('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             j(document).ready(function() {
                 if(j(":file").length) {
                     j(":file").filestyle({placeholder: "Selecione o arquivo"})
@@ -111,8 +103,6 @@
                 j('#btn_scroll').click(function() {
                     window.scrollTo({top:0, behavior: 'smooth'})
                 })
-
-                
             })
         </script>
         @if (!empty($msg))
@@ -125,6 +115,6 @@
                 position: 'top-center',
             })
         </script>
-    @endif
+        @endif
     </footer>
 </html>

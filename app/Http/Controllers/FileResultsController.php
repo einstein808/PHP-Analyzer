@@ -3,8 +3,6 @@
 namespace SegWeb\Http\Controllers;
 
 use SegWeb\File;
-use SegWeb\FileResults;
-// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FileResultsController extends Controller {
@@ -65,8 +63,6 @@ class FileResultsController extends Controller {
             }
         }
         return view('file_results', compact(['file', 'file_contents']));
-
-        // return view('file_results', compact('file_results'));
     }
 }
 

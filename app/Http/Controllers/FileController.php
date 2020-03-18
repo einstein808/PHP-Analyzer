@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use SegWeb\FileResults;
 
-class FileController extends Controller
-{
+class FileController extends Controller {
     public function index() {
         return view('index', ['file_content' => null, 'originalname' => null]);
     }
@@ -125,8 +124,6 @@ class FileController extends Controller
     }
 
     public function getGithubFiles($file_id) {
-        return DB::table('files')
-                ->where('repository_id', $file_id)
-                ->get();
+        return DB::table('files')->where('repository_id', $file_id)->get();
     }
 }

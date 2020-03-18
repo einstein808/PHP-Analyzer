@@ -4,8 +4,7 @@ namespace SegWeb;
 
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
-{
+class File extends Model {
     protected $filltable = [
         'user_id',
         'file_path',

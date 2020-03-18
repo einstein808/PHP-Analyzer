@@ -11,8 +11,7 @@ use SegWeb\Http\Controllers\Tools;
 use SegWeb\Http\Controllers\FileController;
 use SegWeb\Http\Controllers\FileResultsController;
 
-class GithubFilesController extends Controller
-{
+class GithubFilesController extends Controller {
     private $github_files_ids = NULL;
 
     public function index() {
@@ -66,7 +65,6 @@ class GithubFilesController extends Controller
                             $file_contents[$value]['file'] = FileController::getFileById($value);
                         }
                     }
-
                     return view('github', compact(['file', 'file_contents', 'msg']));
                 } else {
                     $msg['text'] = "Erro ao efetuar download";
@@ -137,6 +135,4 @@ class GithubFilesController extends Controller
             }
         }
     }
-
-    
 }
