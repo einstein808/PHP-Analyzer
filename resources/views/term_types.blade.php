@@ -21,14 +21,14 @@
                     <input type="hidden" name="id" value="{{$id}}">
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3>Cadastro de Tipos de Temos</h3>
+                            <h3>Cadastro de Categorias de Termos</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="term_type">Tipo de termo:</label><input type="text" name="term_type" class="form-control" value="{{$term}}" required>
+                                            <label for="term_type">Nome:</label><input type="text" name="term_type" class="form-control" value="{{$term}}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -56,7 +56,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h3>Tipos de Termos Cadastrados</h3>
+                        <h3>Categorias de Termos Cadastradas</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -65,7 +65,7 @@
                                     <table id="table_term_types" class="table table-hover table-bordered addDataTable">
                                         <thead>
                                             <tr>
-                                                <th>Nome do tipo de termo</th>
+                                                <th>Nome</th>
                                                 <th>Cor</th>
                                                 <th>Data de Envio</th>
                                             </tr>

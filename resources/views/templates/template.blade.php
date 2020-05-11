@@ -25,11 +25,11 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/jquery.toast.css') }}" rel="stylesheet">
-        <title>SegWeb</title>
+        <title>PHP Analyzer</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">SegWeb</a>
+            <a class="navbar-brand" href="/">PHP Analyzer</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Alterna navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -52,7 +52,7 @@
                                 Gerenciar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/term_types">Tipos de Termos</a>
+                                <a class="dropdown-item" href="/term_types">Categorias de Termos</a>
                                 <a class="dropdown-item" href="/terms">Termos</a>
                             </div>
                         </li>

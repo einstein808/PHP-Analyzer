@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
-                                            <label for="color">Tipo de termo:</label>
+                                            <label for="color">Categoria:</label>
                                             <select name="term_type" id="term_type" class="form-control" required>
                                                 <option value="">---Selecione---</option>
                                                 @if (!empty($term_types))
@@ -64,7 +64,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h3>Tipos de Termos Cadastrados</h3>
+                        <h3>Termos Cadastrados</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
