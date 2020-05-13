@@ -38,3 +38,5 @@ Route::get('/terms', 'TermController@index');
 Route::get('/terms/{id}', 'TermController@edit');
 
 Route::post('/terms', 'TermController@store');
+
+Route::get('/repo/api', 'GithubFilesController@downloadGithub');

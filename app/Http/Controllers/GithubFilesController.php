@@ -65,21 +65,42 @@ class GithubFilesController extends Controller {
                             $file_contents[$value]['file'] = FileController::getFileById($value);
                         }
                     }
-                    return view('github', compact(['file', 'file_contents', 'msg']));
+                    
+                    if($request->path() == "github") {
+                        return view('github', compact(['file', 'file_contents', 'msg']));
+                    } else {
+                        header("Content-type:application/json");
+                        echo json_encode($this->getResultArray($file, $file_contents));
+                    }
                 } else {
                     $msg['text'] = "Erro ao efetuar download";
                     $msg['type'] = "error";
-                    return view('github', compact(['msg']));
+                    if($request->path() == "github") {
+                        return view('github', compact(['msg']));
+                    } else {
+                        header("Content-type:application/json");
+                        echo json_encode(['error' => $msg['text']]);
+                    }
                 }
             } catch (Exception $e) {
                 $msg['text'] = "Erro ao realizar a operação";
                 $msg['type'] = "error";
-                return view('github', compact(['msg']));
+                if($request->path() == "github") {
+                    return view('github', compact(['msg']));
+                } else {
+                    header("Content-type:application/json");
+                    echo json_encode(['error' => $msg['text']]);
+                }
             }
         } else {
             $msg['text'] = "Link inválido!";
             $msg['type'] = "error";
-            return view('github', compact(['msg']));
+            if($request->path() == "github") {
+                return view('github', compact(['msg']));
+            } else {
+                header("Content-type:application/json");
+                echo json_encode(['error' => $msg['text']]);
+            }
         }
     }  
 
@@ -134,5 +155,26 @@ class GithubFilesController extends Controller {
                 }
             }
         }
+    }
+
+    public function getResultArray($file, $file_contents) {
+        $array = [];
+        foreach($file_contents as $value) {
+            $file_results = $value['results'];
+            $file_path = explode('/', explode($file->original_file_name, $value['file']->file_path)[1]);
+            unset($file_path[0]);
+            $file_path = $file->original_file_name.'/'.implode('/', $file_path);
+
+            $array[] = ['file' => $file_path];
+
+            foreach ($file_results as $results) {
+                $array['problems'][] = [
+                    'line' => $results->line_number,
+                    'category' => $results->term_type,
+                    'problem' => $results->term
+                ];
+            }
+        }
+        return $array;
     }
 }
