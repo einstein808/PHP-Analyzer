@@ -86,11 +86,15 @@
                     </ul>
             </div>
         </nav>
-        <div class="container-fluid mt-2">
+        <div class="container-fluid mt-2 content">
             @yield('content')
         </div>
-    </body>
-    <footer class="mt-2">
+        <br><br><br><br><br><br><br>
+        <div class="mt-4 footer">
+            <a href="https://www.uniacademia.edu.br/" target="_blank">
+                <img src="{{asset('img/logo_uniacademia.png')}}" alt="" width="184" height="60">
+            </a>
+        </div>
         <script src="{{ asset('js/jquery-input-file.js') }}"></script>
         <script type="text/javascript">
             j = jQuery.noConflict()
@@ -116,5 +120,5 @@
             })
         </script>
         @endif
-    </footer>
+    </body>
 </html>

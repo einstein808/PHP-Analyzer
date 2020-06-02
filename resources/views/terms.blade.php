@@ -74,7 +74,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Termo</th>
-                                                <th>Cor</th>
+                                                <th>Categoria</th>
                                                 <th>Data de Envio</th>
                                             </tr>
                                         </thead>

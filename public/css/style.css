@@ -24,6 +24,14 @@
     background-color: #FEE364;
 }
 
+.pastel-orange {
+    background-color: #FCA044;
+}
+
+.pure-orange {
+    background-color: #FF8B17;
+}
+
 .code-border {
     border: 1px solid black;
 }
@@ -138,4 +146,13 @@
 .swing-in-top-fwd {
     -webkit-animation: swing-in-top-fwd 0.8s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
             animation: swing-in-top-fwd 0.8s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8fafc;
+    text-align: center;
 }
