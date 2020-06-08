@@ -7,10 +7,10 @@
             <table id="table-yourfiles" class="table table-striped table-bordered addDataTable">
                 <thead>
                     <tr>
-                        <th>Nome do arquivo</th>
-                        <th>Data de Envio</th>
-                        <th>Forma de envio</th>
-                        <th>Resultados</th>
+                        <th>File Name</th>
+                        <th>Submitted Date</th>
+                        <th>File Type</th>
+                        <th>Results</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,7 +19,7 @@
                         <td>{{$file->original_file_name}}</td>
                         <td>{{Tools::data($file->created_at)}}</td>
                         <td>{{$file->type}}</td>
-                        <td><a href="/yourfiles/{{$file->id}}" class="btn btn-outline-info">Resultados</a></td>
+                        <td><a href="/yourfiles/{{$file->id}}" class="btn btn-outline-info">Results</a></td>
                     </tr>
                     @endforeach
                 </tbody>

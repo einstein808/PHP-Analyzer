@@ -21,21 +21,21 @@
                     <input type="hidden" name="id" value="{{$id}}">
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3>Cadastro de Termos</h3>
+                            <h3>Term Management</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="term_type">Termo:</label><input type="text" name="term" class="form-control" value="{{$term_name}}">
+                                            <label for="term_type">Term:</label><input type="text" name="term" class="form-control" value="{{$term_name}}">
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
-                                            <label for="color">Categoria:</label>
+                                            <label for="color">Category:</label>
                                             <select name="term_type" id="term_type" class="form-control" required>
-                                                <option value="">---Selecione---</option>
+                                                <option value="">---Select---</option>
                                                 @if (!empty($term_types))
                                                     @foreach ($term_types as $term_type)
                                                         <option value="{{$term_type->id}}" @if($term_type->id == $term_type_id) selected @endif>{{$term_type->term_type}}</option>
@@ -49,11 +49,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-md-12">
-                                @if(!empty($id))
-                                    <button type="submit" class="btn btn-primary pull-right">Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                @else
-                                    <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                                @endif
+                                <button type="submit" class="btn btn-primary pull-right">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -64,7 +60,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h3>Termos Cadastrados</h3>
+                        <h3>Registered Term</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -73,9 +69,9 @@
                                     <table id="table_terms" class="table table-hover table-bordered addDataTable">
                                         <thead>
                                             <tr>
-                                                <th>Termo</th>
-                                                <th>Categoria</th>
-                                                <th>Data de Envio</th>
+                                                <th>Term</th>
+                                                <th>Category</th>
+                                                <th>Submitted Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,7 +85,7 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    Nenhum tipo de termo encontrado!
+                                    No terms found!
                                 @endif
                             </div>
                         </div>

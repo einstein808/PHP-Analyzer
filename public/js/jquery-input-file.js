@@ -134,7 +134,7 @@
             });
         return void 0 !== typeof s ? s : l
     }, e.fn.filestyle.defaults = {
-        text: "Selecionar arquivo",
+        text: "Select File",
         htmlIcon: "",
         btnClass: "btn btn-default",
         size: "nr",
@@ -144,7 +144,7 @@
         buttonBefore: !1,
         dragdrop: !0,
         disabled: !1,
-        placeholder: "Selecione um arquivo",
+        placeholder: "Select your file",
         onChange: function () {}
     }, e.fn.filestyle.noConflict = function () {
         return e.fn.filestyle = n, this

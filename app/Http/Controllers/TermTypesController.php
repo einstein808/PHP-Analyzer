@@ -13,10 +13,10 @@ class TermTypesController extends Controller {
     public function store(Request $request) {
         if(empty($request->id)) {
             $term_type = new TermTypes();
-            $msg['text'] = 'Termo inserido com sucesso!';
+            $msg['text'] = 'Term category successfully inserted!';
         } else {
             $term_type = TermTypes::find($request->id);
-            $msg['text'] = 'Termo atualizado com sucesso!';
+            $msg['text'] = 'Term category successfully updated!';
         }
         $term_type->term_type = $request->term_type;
         $term_type->color = $request->color;

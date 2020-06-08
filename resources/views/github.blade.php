@@ -11,8 +11,8 @@
     @endphp
     <div class="row">
         <div class="col-md-12">
-            <h1>Repositório: {{$file->original_file_name}}</h1>
-            <h3>Foram encontrados {{$count_results}} problemas neste repositório!</h3>
+            <h1>Repository: {{$file->original_file_name}}</h1>
+            <h3>{{$count_results}} problems found!</h3>
         </div>
     </div>
     @foreach($file_contents as $key => $value)
@@ -25,7 +25,7 @@
             $file_path = $file->original_file_name.'/'.implode('/', $file_path);
         @endphp
         <div class="card mt-2">
-            <div class="card-header clickable" data-toggle="collapse" data-target="#collapse-{{$key}}" title="Clique aqui para ver os detalhes do arquivo">
+            <div class="card-header clickable" data-toggle="collapse" data-target="#collapse-{{$key}}" title="Click here to see file details">
                 <h5>
                     @if (count($file_results) > 0)
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
@@ -64,14 +64,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Resultados</h4>
+                            <h4>Results</h4>
                         </div>
                         <div class="card-body">
                             @if(count($file_results) > 0) 
                                 <div class="row">
                                     <div class="container">
                                         <div class="col-md-12">
-                                            <h2>Foram encontrados {{count($file_results)}} problemas!</h2>
+                                            <h2>{{count($file_results)}} problems found!</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -79,12 +79,12 @@
                                     @foreach ($file_results as $results)
                                         <div class="list-group-item list-group-item-action line_result" id="line_result-{{$results->line_number}}">
                                             <div class="w-100">
-                                                <h5 class="mb-1">Linha: {{$results->line_number}}</h5>
+                                                <h5 class="mb-1">Line: {{$results->line_number}}</h5>
                                                 <br>
                                                 <p><span class="mb-1">Tipo do problema: </span><a href="">{{$results->term_type}}</a></p>
-                                                <p class="mb-1">Problema: 
+                                                <p class="mb-1">Problem: 
                                                     @if($results->term_type != "disabled_functions")
-                                                    <a title="Clique aqui para ver a definição da função" target="_blank" href="https://www.php.net/manual/en/function.{{$results->term}}">{{$results->term}}</a>
+                                                    <a title="Click here to see function's definition" target="_blank" href="https://www.php.net/manual/en/function.{{$results->term}}">{{$results->term}}</a>
                                                     @else
                                                         <span>{{$results->term}}</span>
                                                     @endif
@@ -94,7 +94,7 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="mb-1">Nenhum problema encontrado</span></p>
+                                <p class="mb-1">No problems found!</span></p>
                             @endif
                         </div>
                     </div>
@@ -117,7 +117,11 @@
             <div class="card">
                 <div class="card-header text-center">
                     <h3>
-                        Enviar repositório do Github
+                        @if(empty($file_contents))
+                            Submit Github Repository
+                        @else
+                            Submit Another Github Repository
+                        @endif
                     </h3>
                 </div>
                 <div class="card-body">
@@ -135,7 +139,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-upload" aria-hidden="true"></i></button>
+                        <button type="submit" class="btn btn-primary pull-right">Submit <i class="fa fa-upload" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>

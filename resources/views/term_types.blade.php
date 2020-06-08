@@ -21,19 +21,19 @@
                     <input type="hidden" name="id" value="{{$id}}">
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3>Cadastro de Categorias de Termos</h3>
+                            <h3>Term Categories Management</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="term_type">Nome:</label><input type="text" name="term_type" class="form-control" value="{{$term}}" required>
+                                            <label for="term_type">Category:</label><input type="text" name="term_type" class="form-control" value="{{$term}}" required>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-12">
-                                            <label for="color">Cor:</label><input type="text" name="color" class="form-control" value="{{$color}}" required>
+                                            <label for="color">Color:</label><input type="text" name="color" class="form-control" value="{{$color}}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -41,11 +41,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="col-md-12">
-                                @if(!empty($id))
-                                    <button type="submit" class="btn btn-primary pull-right">Salvar <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                                @else
-                                    <button type="submit" class="btn btn-primary pull-right">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                                @endif
+                                <button type="submit" class="btn btn-primary pull-right">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -56,7 +52,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h3>Categorias de Termos Cadastradas</h3>
+                        <h3>Registered Term Categories</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -65,9 +61,9 @@
                                     <table id="table_term_types" class="table table-hover table-bordered addDataTable">
                                         <thead>
                                             <tr>
-                                                <th>Nome</th>
-                                                <th>Cor</th>
-                                                <th>Data de Envio</th>
+                                                <th>Category</th>
+                                                <th>Color</th>
+                                                <th>Submitted Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -81,7 +77,7 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    Nenhum tipo de termo encontrado!
+                                    No categories found!
                                 @endif
                             </div>
                         </div>

@@ -36,24 +36,24 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Enviar arquivo <i class="fa fa-file" aria-hidden="true"></i><span class="sr-only"></span></a>
+                        <a class="nav-link" href="/">Submit File <i class="fa fa-file" aria-hidden="true"></i><span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/github">Enviar repositório do Github <i class="fa fa-github" aria-hidden="true"></i><span class="sr-only"></span></a>
+                        <a class="nav-link" href="/github">Submit Github Repository <i class="fa fa-github" aria-hidden="true"></i><span class="sr-only"></span></a>
                     </li>
                     @if (Auth::check())    
                         <li class="nav-item active">
-                            <a class="nav-link" href="/yourfiles">Seus arquivos <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
+                            <a class="nav-link" href="/yourfiles">Your Files <i class="fa fa-files-o" aria-hidden="true"></i></i><span class="sr-only"></span></a>
                         </li>
                     @endif
                     @if ($user_acc == 'A')
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Gerenciar
+                                Manage
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/term_types">Categorias de Termos</a>
-                                <a class="dropdown-item" href="/terms">Termos</a>
+                                <a class="dropdown-item" href="/term_types">Term Categories</a>
+                                <a class="dropdown-item" href="/terms">Terms</a>
                             </div>
                         </li>
                     @endif
@@ -101,7 +101,7 @@
 
             j(document).ready(function() {
                 if(j(":file").length) {
-                    j(":file").filestyle({placeholder: "Selecione o arquivo"})
+                    j(":file").filestyle()
                 }
 
                 j('#btn_scroll').click(function() {
@@ -112,7 +112,7 @@
         @if (!empty($msg))
         <script>
             j.toast({
-                heading: 'Informação!',
+                heading: 'Info!',
                 icon: "{{$msg['type']}}",
                 text: "{{$msg['text']}}",
                 showHideTransition: 'slide',

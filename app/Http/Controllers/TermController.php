@@ -16,10 +16,10 @@ class TermController extends Controller {
     public function store(Request $request) {
         if(empty($request->id)) {
             $term = new Terms();
-            $msg['text'] = 'Termo inserido com sucesso!';
+            $msg['text'] = 'Term successfully inserted!';
         } else {
             $term = Terms::find($request->id);
-            $msg['text'] = 'Termo atualizado com sucesso!';
+            $msg['text'] = 'Term successfully updated!';
         }
         $term->term = $request->term;
         $term->term_type_id = $request->term_type;

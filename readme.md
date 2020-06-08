@@ -1,11 +1,11 @@
-<p><img src="https://assets.website-files.com/5cf95301995e8c48a8880a69/5cf98c845723333cdb309ab4_logo_cesjf_negativo-positivo_Horizontal_Preto.png"></p>
+<p><center><img src="https://assets.website-files.com/5cf95301995e8c48a8880a69/5ec524104ef2ed3e912b5348_COLORIDA-p-500.png"></center></p>
 <br>
 
 ## PHP Analyzer
 
-Esta é uma ferramenta desenvolvida como trabalho de conclusão de curso do curso de Sistemas de Informação no Centro Universitário Academia (UniAcademia) - Juiz de Fora, MG.
-Aluno: Jonas Antônio Gomes Vicente
-Professor Orientador: Tassio Ferenzini Martins Sirqueira
+Esta é uma ferramenta desenvolvida como trabalho de conclusão de curso do curso de Sistemas de Informação no Centro Universitário Academia (UniAcademia) - Juiz de Fora, MG. <br>
+Aluno: Jonas Antônio Gomes Vicente <br>
+Professor Orientador: Tassio Ferenzini Martins Sirqueira <br>
 
 ## Preparando o ambiente de desenvolvimento
 Este sistema foi desenvolvido em PHP (7.3) com o framework [Laravel (5.8)](https://laravel.com/docs/5.8/releases).

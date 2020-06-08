@@ -20,7 +20,7 @@ class GithubFilesController extends Controller {
 
     public function downloadGithub(Request $request) {
         if(Tools::contains("github", $request->github_link)) {
-            $msg = ['text' => 'Projeto baixado com sucesso!', 'type' => 'success'];
+            $msg = ['text' => 'Repository has been successfully downloaded!', 'type' => 'success'];
             try {
                 if(Auth::check()) {
                     $user = Auth::user();
@@ -73,7 +73,7 @@ class GithubFilesController extends Controller {
                         echo json_encode($this->getResultArray($file, $file_contents));
                     }
                 } else {
-                    $msg['text'] = "Erro ao efetuar download";
+                    $msg['text'] = "An error occurred during repository download";
                     $msg['type'] = "error";
                     if($request->path() == "github") {
                         return view('github', compact(['msg']));
@@ -83,7 +83,7 @@ class GithubFilesController extends Controller {
                     }
                 }
             } catch (Exception $e) {
-                $msg['text'] = "Erro ao realizar a operação";
+                $msg['text'] = "An error occurred";
                 $msg['type'] = "error";
                 if($request->path() == "github") {
                     return view('github', compact(['msg']));
@@ -93,7 +93,7 @@ class GithubFilesController extends Controller {
                 }
             }
         } else {
-            $msg['text'] = "Link inválido!";
+            $msg['text'] = "An invalid repository link has been submitted!";
             $msg['type'] = "error";
             if($request->path() == "github") {
                 return view('github', compact(['msg']));

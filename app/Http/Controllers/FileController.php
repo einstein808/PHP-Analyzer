@@ -25,7 +25,7 @@ class FileController extends Controller {
 
     public function submitFile(Request $request) {
         $msg = [
-            'text' => 'Arquivo enviado com sucesso!',
+            'text' => 'Successfully Submitted!',
             'type' => 'success'
         ];
         if($request->file('file')->getClientMimeType() == 'application/x-php') {
@@ -52,7 +52,7 @@ class FileController extends Controller {
                 'msg' => $msg
             ]);
         } else {
-            $msg['text'] = "Tipo de arquivo não permitido! Por favor, envie um arquivo PHP.";
+            $msg['text'] = "File format not allowed! Please, submit a PHP file.";
             $msg['type'] = "error";
             return view('index', ['msg' => $msg]);
         }
@@ -90,7 +90,7 @@ class FileController extends Controller {
             fclose($fn);
             return $file_content;
         } catch (Illuminate\Contracts\Filesystem\FileNotFoundException $exception) {
-            return "Arquivo não encontrado";
+            return "File Not Found!";
         }
     }
 
