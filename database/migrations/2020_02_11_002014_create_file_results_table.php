@@ -15,9 +15,9 @@ class CreateFileResultsTable extends Migration
     {
         Schema::create('file_results', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('file_id');
+            $table->unsignedBigInteger('file_id');
             $table->integer('line_number');
-            $table->bigInteger('term_id');
+            $table->unsignedBigInteger('term_id');
             $table->timestamps();
             $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
             $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');

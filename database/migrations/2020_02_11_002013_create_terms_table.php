@@ -16,7 +16,7 @@ class CreateTermsTable extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('term')->unique();
-            $table->bigInteger('term_type_id');
+            $table->unsignedBigInteger('term_type_id');
             $table->timestamps();
             $table->foreign('term_type_id')->references('id')->on('term_types')->onDelete('cascade');
         });
