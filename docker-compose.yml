@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html/public
+    volumes:
+      - ./:/var/www/html
+    entrypoint: ["/var/www/html/entrypoint.sh"]
+    command: ["php-fpm"]   # ou o comando que você usar para rodar o PHP no container
+  
+    networks:
+      - php-analyzer-network
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: php_analyzer
+      MYSQL_USER: analyzer_user
+      MYSQL_PASSWORD: analyzer_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - php-analyzer-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - php-analyzer-network
+
+volumes:
+  mysql_data:
+
+networks:
+  php-analyzer-network:
+    driver: bridge

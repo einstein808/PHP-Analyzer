@@ -27,11 +27,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
     "autoload": {
         "psr-4": {
             "SegWeb\\": "app/"
