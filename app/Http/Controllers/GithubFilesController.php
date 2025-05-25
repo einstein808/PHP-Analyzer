@@ -1,6 +1,7 @@
 <?php
 
 namespace SegWeb\Http\Controllers;
+use Exception;
 use Auth;
 use Chumper\Zipper\Facades\Zipper;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class GithubFilesController extends Controller {
                 }
                 // Baixa o arquivo .zip do github
                 $github_link = substr($request->github_link, -1) == '/' ? substr_replace($request->github_link ,"", -1)  : $request->github_link;
-                
+
                 $url = $github_link.'/archive/'.$request->branch.'.zip';
                 $folder = 'github_uploads/';
                 $now = date('ymdhis');
@@ -42,7 +43,7 @@ class GithubFilesController extends Controller {
                     $file_location = base_path('storage/app/'.$folder.$now.'_'.$request->branch);
                     Zipper::make(base_path('storage/app/'.$name))->extractTo($file_location);
                     unlink(base_path('storage/app/'.$name));
-                    
+
                     // Salva o registro do repositório do github
                     $file = new File();
                     $file->user_id = $user_id;
@@ -54,7 +55,7 @@ class GithubFilesController extends Controller {
 
                     // Realiza a análise dos arquivos do repositório
                     $this->analiseGithubFiles($file_location, $file->id);
-                    
+
                     // Busca o conteúdo dos arquivos para exibição
                     $file_results_controller = new FileResultsController();
                     $file_contents = NULL;
@@ -65,7 +66,7 @@ class GithubFilesController extends Controller {
                             $file_contents[$value]['file'] = FileController::getFileById($value);
                         }
                     }
-                    
+
                     if($request->path() == "github") {
                         return view('github', compact(['file', 'file_contents', 'msg']));
                     } else {
@@ -102,7 +103,7 @@ class GithubFilesController extends Controller {
                 echo json_encode(['error' => $msg['text']]);
             }
         }
-    }  
+    }
 
     public function analiseGithubFiles($dir, $repository_id) {
         $ffs = scandir($dir);

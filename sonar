@@ -1,0 +1,5 @@
+sonar-scanner \
+  -Dsonar.projectKey=php-analyzer \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=sqp_8f933f3911103d1c6615c44313a0ae6a5f1184e6
